@@ -25,6 +25,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
+        'address_street',
+        'address_housenumber',
+        'address_postalcode',
+        'address_city',
         'email',
         'password',
     ];
@@ -58,4 +63,8 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function orders(){
+        return $this->hasMany(Order::class);
+    }
 }

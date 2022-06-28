@@ -10,6 +10,11 @@ import JetValidationErrors from '@/Jetstream/ValidationErrors.vue';
 
 const form = useForm({
     name: '',
+    surname: '',
+    addressStreet: '',
+    addressHousenumber: '',
+    addressPostalcode: '',
+    addressCity: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -17,6 +22,8 @@ const form = useForm({
 });
 
 const submit = () => {
+    // remove whitespaces from postalcode
+    form.addressPostalcode = form.addressPostalcode.replaceAll(/\s/g,'');
     form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
@@ -35,7 +42,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <JetLabel for="name" value="Name" />
+                <JetLabel for="name" value="Naam" />
                 <JetInput
                     id="name"
                     v-model="form.name"
@@ -44,6 +51,78 @@ const submit = () => {
                     required
                     autofocus
                     autocomplete="name"
+                />
+            </div>
+
+            <div class="mt-4">
+                <JetLabel for="surname" value="Achternaam" />
+                <JetInput
+                    id="surname"
+                    v-model="form.surname"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="family-name"
+                />
+            </div>
+            <div class="mt-4">
+                <JetLabel for="streetname" value="Straatnaam" />
+                <JetInput
+                    id="streetname"
+                    v-model="form.addressStreet"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="street-address"
+                />
+            </div>
+            <div class="mt-4">
+                <div class="flex">
+                    <div class="w-1/5">
+                        <JetLabel for="housenumber" value="Huisnummer"></JetLabel>
+                        <JetInput
+                            id="housenumber"
+                            v-model="form.addressHousenumber"
+                            type="text"
+                            class="mt-1 block w-full"
+                            required
+                            autocomplete=""
+                        />
+                    </div>
+                    <div class="mx-auto w-1/5">
+                        <JetLabel for="toevoeging" value="Toevoeging"></JetLabel>
+                        <JetInput
+                            id="toevoeging"
+                            v-model="form.addressHousenumber"
+                            type="text"
+                            class="mt-1 block w-full"
+                            required
+                            autocomplete=""
+                        />
+                    </div>
+                    <div class="w-1/3">
+                        <JetLabel for="postalcode" value="Postcode"></JetLabel>
+                        <JetInput
+                            id="postalcode"
+                            v-model="form.addressPostalcode"
+                            type="text"
+                            class="mt-1 block w-full"
+                            required
+                            autocomplete="postal-code"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <JetLabel for="city" value="Stad" />
+                <JetInput
+                    id="city"
+                    v-model="form.addressCity"
+                    type="text"
+                    class="mt-1 block w-full"
+                    required
+                    autocomplete="street-address"
                 />
             </div>
 
@@ -59,7 +138,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <JetLabel for="password" value="Password" />
+                <JetLabel for="password" value="Wachtwoord" />
                 <JetInput
                     id="password"
                     v-model="form.password"
@@ -71,7 +150,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <JetLabel for="password_confirmation" value="Confirm Password" />
+                <JetLabel for="password_confirmation" value="Herhaal wachtwoord" />
                 <JetInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"
